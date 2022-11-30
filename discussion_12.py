@@ -58,13 +58,15 @@ def visualization_salary_data(cur, conn):
     plt.figure()
 
     cur.execute(
-        "select jos.job_title, employees.salary from employees join jobs on jobs.job_id=employees.job_id"
+        "select jobs.job_title, employees.salary from employees join jobs on jobs.job_id=employees.job_id"
     )
     res=cur.fetchall()
-    conn.commit()
+    # conn.commit()
     x,y=zip(*res)
-    plt.scatter(x,y)
-    
+    plt.scatter(x,y, color = 'red', marker='x')
+    plt.xticks(rotation = 45)
+    plt.tight_layout()
+    plt.show()
 
 class TestDiscussion12(unittest.TestCase):
     def setUp(self) -> None:
@@ -99,6 +101,7 @@ def main():
 
     wrong_salary = (problematic_salary(cur, conn))
     print(wrong_salary)
+    visualization_salary_data(cur, conn)
 
 if __name__ == "__main__":
     main()
